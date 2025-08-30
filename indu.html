@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px 5px black;
+        }
+        input {
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            background: #00aaff;
+            color: white;
+            border-radius: 5px;
+        }
+        #result {
+            margin-top: 30px;
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px 30px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Weather App</h1>
+    <input type="text" id="city" placeholder="Enter city name">
+    <button onclick="getWeather()">Get Temperature</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function getWeather() {
+            const city = document.getElementById('city').value;
+            const apiKey = "80f23ee7fff22e8db27e0c9105ad5434s"; 
+            const weatherUrl = https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric;
+
+            try {
+                const response = await fetch(weatherUrl);
+                if (!response.ok) {
+                    throw new Error('City not found');
+                }
+                const data = await response.json();
+                const temp = data.main.temp;
+
+                document.getElementById('result').innerHTML = 
+                    Temperature at ${city} is ${temp}°C;
+
+                
+                document.body.style.backgroundImage = 
+                    url('https://source.unsplash.com/1600x900/?${city},city');
+
+            } catch (error) {
+                document.getElementById('result').innerHTML = error.message;
+            }
+        }
+    </script>
+
+</body>
+</html>
